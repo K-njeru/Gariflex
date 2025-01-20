@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { VehicleCategories } from './vehicle-categories'
 import { VehicleDeals } from './vehicle-deals'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import ThemeSwitch from './ThemeSwitch'
 
 export function VehicleSearch() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -26,6 +27,7 @@ export function VehicleSearch() {
             <p className="text-xs text-muted-foreground">Nairobi, KE</p>
           </div>
         </div>
+        <ThemeSwitch />
         <button className="rounded-full p-2 hover:bg-gray-100">
           <Bell className="h-5 w-5" />
         </button>

@@ -3,7 +3,7 @@ import { BottomNav } from '@/components/bottom-nav'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <main className="pb-16">
         <VehicleSearch />
       </main>

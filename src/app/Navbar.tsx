@@ -1,18 +1,17 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import { Menu, X, Sun, Moon, Search } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Input } from '@/components/ui/input'
+import ThemeSwitch from '@/components/ThemeSwitch'
 import { motion } from "framer-motion";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("home");
-  const [darkMode, setDarkMode] = useState(true); // Default to dark mode
   const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
@@ -55,21 +54,10 @@ export default function Navbar() {
     { name: "Faqs", href: "#faqs" },
   ];
 
-  // Apply the dark class to <html> based on darkMode state
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.remove("light");
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark"); 
-      document.documentElement.classList.add("light");
-    }
-  }, [darkMode]);
-
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled ? 'bg-gray-900' : 'bg-transparent'
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled ? 'bg-background' : 'bg-transparent'
           }`}
       >
         <nav
@@ -87,7 +75,7 @@ export default function Navbar() {
                 height={32}
               />
             </Link>
-            <span className="ml-2 text-lg font-bold text-white">Gariflex</span>
+            <span className="ml-2 text-lg font-bold">Gariflex</span>
           </div>
 
           {/* Centered nav items */}
@@ -102,7 +90,7 @@ export default function Navbar() {
                   href={item.href}
                   className={`text-base font-medium ${activeSection === item.href.substring(1)
                     ? 'text-teal-500'
-                    : 'text-gray-300 hover:text-white'
+                    : 'text-foreground hover:text-white'
                     }`}
                 >
                   {item.name}
@@ -113,15 +101,10 @@ export default function Navbar() {
 
           {/* Get Started and Dark Mode Toggle */}
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
-            <Button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-md bg-transparent hover:bg-gray-600"
-            >
-              {darkMode ? <Sun className="h-5 w-5 text-white" /> : <Moon className="h-5 w-5 text-black" />}
-            </Button>
+           <ThemeSwitch />
             <Link
               href="/get-started"
-              className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
+              className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold hover:bg-teal-700"
             >
               Get Started
             </Link>
@@ -139,7 +122,7 @@ export default function Navbar() {
 
       {/* Search Section */}
       {showSearch && (
-        <div className="fixed top-20 left-0 right-0 z-40 bg-gray-900 p-4">
+        <div className="fixed top-20 left-0 right-0 z-40 bg-background p-4">
           <div className="relative mx-auto w-full max-w-xl">
             <Input
               type="text"
@@ -172,7 +155,7 @@ export default function Navbar() {
                   height={32}
                 />
               </Link>
-              <span className="ml-2 text-lg font-bold text-white">Gariflex</span>
+              <span className="ml-2 text-lg font-bold ">Gariflex</span>
               <button
                 type="button"
                 className="-m-2.5 rounded-md p-2.5 text-gray-400 hover:text-gray-200"
@@ -187,7 +170,7 @@ export default function Navbar() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-300 hover:bg-gray-800 hover:text-white"
+                    className="block rounded-lg px-3 py-2 text-base font-semibold hover:bg-muted "
                     onClick={() => setMenuOpen(false)}
                   >
                     {item.name}
@@ -196,7 +179,7 @@ export default function Navbar() {
               </div>
               <Link
                 href="/get-started"
-                className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
+                className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold hover:bg-teal-700"
               >
                 Get Started
               </Link>
@@ -205,12 +188,7 @@ export default function Navbar() {
 
           {/* Bottom Section */}
           <div className="relative w-full flex items-end justify-end">
-            <Button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-md bg-transparent hover:bg-gray-600"
-            >
-              {darkMode ? <Sun className="h-5 w-5 text-white" /> : <Moon className="h-5 w-5 text-black" />}
-            </Button>
+            <ThemeSwitch />
           </div>
         </motion.div>
       )}

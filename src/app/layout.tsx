@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
+import { Providers } from './providers'
 
 // Configure Urbanist font for regular text
 const urbanist = Urbanist({
@@ -21,9 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${urbanist.variable} antialiased`}>
+        <Providers>
         {children}
+        </Providers>
       </body>
     </html>
   );
