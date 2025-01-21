@@ -25,11 +25,11 @@ export default function ThemeSwitch() {
   )
 
   if (resolvedTheme === 'dark') {
-    return <Sun onClick={() => setTheme('light')} />
+    return <Sun onClick={() => setTheme('light')}  className = 'cursor-pointer' />
   }
 
   if (resolvedTheme === 'light') {
-    return <Moon onClick={() => setTheme('dark')} />
+    return <Moon onClick={() => setTheme('dark')} className = 'cursor-pointer' />
   }
 
 }
