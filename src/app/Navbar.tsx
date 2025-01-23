@@ -48,10 +48,10 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
+    { name: "Home", href: "/dashboard" },
+    { name: "About", href: "/about" },
     { name: "Contact", href: "#contact" },
-    { name: "Faqs", href: "#faqs" },
+    { name: "Faqs", href: "/faqs" },
   ];
 
   return (
