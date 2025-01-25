@@ -1,18 +1,24 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import { Menu, X, Search } from 'lucide-react';
+import { Menu, X, Search, ArrowRight } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import { Input } from '@/components/ui/input'
 import ThemeSwitch from '@/components/ThemeSwitch'
 import { motion } from "framer-motion";
+import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/components";
+import { Button } from "@/components/ui/button";
+//import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
+
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("home");
   const [showSearch, setShowSearch] = useState(false);
+  //const [user, setUser] = useState(null); // State to store user information
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,7 +58,22 @@ export default function Navbar() {
     { name: "About", href: "/about" },
     { name: "Contact", href: "#contact" },
     { name: "Faqs", href: "/faqs" },
-  ];
+  ]; 
+
+ /* Fetch user information
+ useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const { getUser } = getKindeServerSession();
+      const userData = await getUser();
+      setUser(userData); // Store user data in state
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+    }
+  };
+  fetchUser();
+}, []);
+*/
 
   return (
     <>
@@ -102,12 +123,18 @@ export default function Navbar() {
           {/* Get Started and Dark Mode Toggle */}
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
            <ThemeSwitch />
-            <Link
-              href="/get-started"
-              className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold hover:bg-teal-700"
-            >
-              Get Started
-            </Link>
+           
+            <Button variant={"destructive"}> Log out <ArrowRight className="ml-1" size={16} /> </Button>
+           
+            <>
+            <RegisterLink>
+            <Button className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold hover:bg-teal-700"> Get Started </Button>
+            </RegisterLink>
+            <LoginLink>
+           <Button variant={"ghost"}> Log in <ArrowRight className="ml-1" size={16} /> </Button>
+           </LoginLink>
+           </>
+           
           </div>
           <button
             type="button"
