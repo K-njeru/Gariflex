@@ -191,7 +191,7 @@ export default function Navbar() {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            <div className="mt-6 flow-root">
+            <div className="flex mt-6 flex-col">
               <div className="space-y-2 py-6">
                 {navItems.map((item) => (
                   <Link
@@ -204,12 +204,12 @@ export default function Navbar() {
                   </Link>
                 ))}
               </div>
-              <Link
-                href="/get-started"
-                className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold hover:bg-teal-700"
-              >
-                Get Started
-              </Link>
+              <hr className="border-teal-300 dark:border-teal-700" />
+              <>
+            <RegisterLink className="inline-flex items-center py-2 px-3 mt-2 text-base font-semibold rounded hover:text-teal-700 hover:bg-muted"> Get Started <ArrowRight className="h-4 ml-2" />
+            </RegisterLink>
+           </>
+
             </div>
           </div>
 
