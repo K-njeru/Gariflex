@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,26 +8,27 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Make {
-  id    Int     @id @default(autoincrement())
-  make  String  @unique // Ensures each make (e.g., Toyota, Honda) is unique
-  logo  String  // URL or file path for the make logo
-
-  models Models[] // One-to-Many relationship with the Models table
+model make {
+  id     Int      @id(map: "Make_pkey") @default(autoincrement())
+  make   String   @unique(map: "Make_make_key")
+  logo   String
+  models models[]
 }
 
-model Models {
-  id           Int      @id @default(autoincrement())
-  makeId       Int      // Foreign key to the Make table
-  make         Make     @relation(fields: [makeId], references: [id], onDelete: Cascade) // Relationship with Make table
-  model        String   // Model name (e.g., Axio, Civic)
-  regNo        String   @unique @db.VarChar(7) // Vehicle registration number with format LLLNNNL
-  mileage      Int      // Mileage in kilometers
-  bodyType     String   // Vehicle body type (e.g., sedan, SUV)
-  seatCapacity Int      // Number of seats in the vehicle
-  rate         Float    // Rate (e.g., rental rate or sale price)
-  year         Int      // Manufacturing year
-  img          String   // URL or file path for the vehicle image
+model models {
+  id           Int       @id(map: "Models_pkey") @default(autoincrement())
+  makeId       Int
+  model        String
+  regNo        String    @unique(map: "Models_regNo_key") @db.VarChar(7)
+  mileage      Int
+  bodyType     String
+  seatCapacity Int
+  rate         Float
+  year         Int
+  img          String
+  booked_from  DateTime? @db.Timestamp(6)
+  booked_to    DateTime? @db.Timestamp(6)
+  make         make      @relation(fields: [makeId], references: [id], onDelete: Cascade, map: "Models_makeId_fkey")
 
-  @@index([makeId]) // Index for optimized querying by makeId
+  @@index([makeId], map: "Models_makeId_idx")
 }
