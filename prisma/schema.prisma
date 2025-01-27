@@ -12,3 +12,27 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Make {
+  id    Int     @id @default(autoincrement())
+  make  String  @unique // Ensures each make (e.g., Toyota, Honda) is unique
+  logo  String  // URL or file path for the make logo
+
+  models Models[] // One-to-Many relationship with the Models table
+}
+
+model Models {
+  id           Int      @id @default(autoincrement())
+  makeId       Int      // Foreign key to the Make table
+  make         Make     @relation(fields: [makeId], references: [id], onDelete: Cascade) // Relationship with Make table
+  model        String   // Model name (e.g., Axio, Civic)
+  regNo        String   @unique @db.VarChar(7) // Vehicle registration number with format LLLNNNL
+  mileage      Int      // Mileage in kilometers
+  bodyType     String   // Vehicle body type (e.g., sedan, SUV)
+  seatCapacity Int      // Number of seats in the vehicle
+  rate         Float    // Rate (e.g., rental rate or sale price)
+  year         Int      // Manufacturing year
+  img          String   // URL or file path for the vehicle image
+
+  @@index([makeId]) // Index for optimized querying by makeId
+}
