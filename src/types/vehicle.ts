@@ -1,26 +1,15 @@
 export interface Vehicle {
-    id: string
-    name: string
-    make: string
-    model: string
-    year: number
-    image: string
-    hourlyRate: number
-    dailyRate: number
-    town: string
-    mileage: number
-    type: 'SUV' | 'Sedan' | 'Van' | 'Truck' | 'Luxury'
-    condition: 'Used' | 'New'
-    available: boolean
-  }
-  
-  export type VehicleFilter = {
-    make?: string
-    model?: string
-    town?: string
-    budget?: number
-    type?: Vehicle['type']
-    condition?: Vehicle['condition']
-  }
-  
-  
+  id: number
+  make: string
+  model: string
+  reg_no: string
+  year: number
+  mileage: number
+  body_type: string
+  seat_capacity: number
+  rate: number
+  img: string
+  booked_from: string | null
+  booked_to: string | null
+}
+

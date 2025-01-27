@@ -16,19 +16,19 @@ model make {
 }
 
 model models {
-  id           Int       @id(map: "Models_pkey") @default(autoincrement())
-  makeId       Int
-  model        String
-  regNo        String    @unique(map: "Models_regNo_key") @db.VarChar(7)
-  mileage      Int
-  bodyType     String
-  seatCapacity Int
-  rate         Float
-  year         Int
-  img          String
-  booked_from  DateTime? @db.Timestamp(6)
-  booked_to    DateTime? @db.Timestamp(6)
-  make         make      @relation(fields: [makeId], references: [id], onDelete: Cascade, map: "Models_makeId_fkey")
+  id            Int       @id(map: "Models_pkey") @default(autoincrement())
+  make_id       Int
+  model         String
+  reg_no        String    @unique(map: "Models_regNo_key") @db.VarChar(7)
+  mileage       Int
+  body_type     String
+  seat_capacity Int
+  rate          Float
+  year          Int
+  img           String
+  booked_from   DateTime? @db.Timestamp(6)
+  booked_to     DateTime? @db.Timestamp(6)
+  make          make      @relation(fields: [make_id], references: [id], onDelete: Cascade, map: "Models_makeId_fkey")
 
-  @@index([makeId], map: "Models_makeId_idx")
+  @@index([make_id], map: "Models_makeId_idx")
 }

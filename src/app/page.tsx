@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
-import Navbar from './Navbar'
+import Navbar from '@/components/Navbar'
 import { motion } from 'framer-motion'
 
 export default function Home() {

@@ -7,10 +7,6 @@ import Link from "next/link";
 import { Input } from '@/components/ui/input'
 import ThemeSwitch from '@/components/ThemeSwitch'
 import { motion } from "framer-motion";
-import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/components";
-import { Button } from "@/components/ui/button";
-//import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-
 
 
 export default function Navbar() {
@@ -60,21 +56,6 @@ export default function Navbar() {
     { name: "Faqs", href: "/faqs" },
   ]; 
 
- /* Fetch user information
- useEffect(() => {
-  const fetchUser = async () => {
-    try {
-      const { getUser } = getKindeServerSession();
-      const userData = await getUser();
-      setUser(userData); // Store user data in state
-    } catch (error) {
-      console.error("Failed to fetch user:", error);
-    }
-  };
-  fetchUser();
-}, []);
-*/
-
   return (
     <>
       <header
@@ -122,19 +103,10 @@ export default function Navbar() {
 
           {/* Get Started and Dark Mode Toggle */}
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
-           <ThemeSwitch />
-           
-            <Button variant={"destructive"}> Log out <ArrowRight className="ml-1" size={16} /> </Button>
-           
-            <>
-            <RegisterLink>
-            <Button className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold hover:bg-teal-700"> Get Started </Button>
-            </RegisterLink>
-            <LoginLink>
-           <Button variant={"ghost"}> Log in <ArrowRight className="ml-1" size={16} /> </Button>
-           </LoginLink>
-           </>
-           
+           <ThemeSwitch /> 
+            <Link
+            href= "#home"
+            className="rounded-md bg-teal-500 px-4 py-2 text-sm font-semibold hover:bg-teal-700"> Get Started </Link>
           </div>
           <button
             type="button"
@@ -154,9 +126,9 @@ export default function Navbar() {
             <Input
               type="text"
               placeholder="Search your dream car"
-              className="w-full bg-transparent text-white placeholder-white placeholder-search backdrop-blur-sm pr-12 border-search focus-visible:ring-1 focus-visible:ring-search"
+              className="w-full bg-transparent text-foreground placeholder-foreground backdrop-blur-sm pr-12 border-search focus-visible:ring-1 focus-visible:ring-search"
             />
-            <Search className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 cursor-pointer text-teal-500" />
+            <Search className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-teal-500" />
           </div>
         </div>
       )}
@@ -205,10 +177,11 @@ export default function Navbar() {
                 ))}
               </div>
               <hr className="border-teal-300 dark:border-teal-700" />
-              <>
-            <RegisterLink className="inline-flex items-center py-2 px-3 mt-2 text-base font-semibold rounded hover:text-teal-700 hover:bg-muted"> Get Started <ArrowRight className="h-4 ml-2" />
-            </RegisterLink>
-           </>
+            <Link 
+            className="inline-flex items-center py-2 px-3 mt-2 text-base font-semibold rounded hover:text-teal-700 hover:bg-muted"
+            href= "#home" > 
+              Get Started <ArrowRight className="h-4 ml-2" />
+            </Link>
 
             </div>
           </div>
