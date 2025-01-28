@@ -11,5 +11,6 @@ export interface Vehicle {
   img: string
   booked_from: string | null
   booked_to: string | null
+  created_at: string
 }
 

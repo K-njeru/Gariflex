@@ -26,8 +26,9 @@ model models {
   rate          Float
   year          Int
   img           String
-  booked_from   DateTime? @db.Timestamp(6)
-  booked_to     DateTime? @db.Timestamp(6)
+  booked_from   DateTime? @db.Timestamptz(6)
+  booked_to     DateTime? @db.Timestamptz(6)
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
   make          make      @relation(fields: [make_id], references: [id], onDelete: Cascade, map: "Models_makeId_fkey")
 
   @@index([make_id], map: "Models_makeId_idx")
