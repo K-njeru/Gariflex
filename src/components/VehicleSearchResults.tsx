@@ -1,33 +1,55 @@
 import type React from "react"
+import { useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { Calendar, MapPin, Zap, Users, ChevronRight } from "lucide-react"
 import type { Vehicle } from "@/types/vehicle"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
 
 interface VehicleSearchResultsProps {
   results: Vehicle[]
 }
 
 const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results }) => {
+  const [showAll, setShowAll] = useState(false)
+
   const formatDate = (dateString: string | null) => {
     if (!dateString) return "N/A"
     return new Date(dateString).toLocaleDateString()
+  }
+
+  const isNew = (createdAt: string) => {
+    const sevenDaysAgo = new Date()
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+    return new Date(createdAt) > sevenDaysAgo
+  }
+
+  const displayedResults = showAll ? results : results.slice(0, 4)
+
+  if (results.length === 0) {
+    return <div className="text-center text-muted-foreground mt-8">No make or model listed matched your query!</div>
   }
 
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Search Results</h3>
-        <button className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
-          View all
-          <ChevronRight className="h-4 w-4 ml-1" />
-        </button>
+        {results.length > 4 && (
+          <Button
+            variant="ghost"
+            className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => setShowAll(!showAll)}
+          >
+            {showAll ? "Show Less" : "View All"}
+            <ChevronRight className="h-4 w-4 ml-1" />
+          </Button>
+        )}
       </div>
 
       <ScrollArea className="w-full">
         <div className="flex space-x-4 pb-4">
-          {results.map((vehicle) => (
+          {displayedResults.map((vehicle) => (
             <motion.div
               key={vehicle.id}
               className="flex-none w-80 rounded-lg overflow-hidden bg-card shadow-md"
@@ -44,6 +66,11 @@ const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results }) 
                 <div className="absolute top-2 right-2 bg-teal-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
                   {vehicle.booked_from ? "Booked" : "Available"}
                 </div>
+                {isNew(vehicle.created_at) && (
+                  <div className="absolute top-2 left-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                    New
+                  </div>
+                )}
               </div>
               <div className="p-4">
                 <h4 className="text-lg font-semibold mb-2">
@@ -79,10 +106,10 @@ const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results }) 
                     Booked: {formatDate(vehicle.booked_from)} - {formatDate(vehicle.booked_to)}
                   </div>
                 )}
-                <button className="w-full bg-teal-500 text-white py-2 rounded-md hover:bg-teal-600 transition-colors duration-200 flex items-center justify-center">
+                <Button className="w-full" variant="default">
                   <Zap className="w-4 h-4 mr-2" />
                   Book Now
-                </button>
+                </Button>
               </div>
             </motion.div>
           ))}

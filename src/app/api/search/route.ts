@@ -43,6 +43,7 @@ export async function GET(request: Request) {
       img: vehicle.img,
       booked_from: vehicle.booked_from ? vehicle.booked_from.toISOString() : null,
       booked_to: vehicle.booked_to ? vehicle.booked_to.toISOString() : null,
+      created_at: vehicle.created_at ? vehicle.created_at.toISOString() : new Date().toISOString(),
     }))
 
     return NextResponse.json(formattedVehicles)
