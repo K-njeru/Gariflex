@@ -9,9 +9,10 @@ import { Button } from "@/components/ui/button"
 
 interface VehicleSearchResultsProps {
   results: Vehicle[]
+  searchPerformed: boolean
 }
 
-const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results }) => {
+const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results, searchPerformed }) => {
   const [showAll, setShowAll] = useState(false)
 
   const formatDate = (dateString: string | null) => {
@@ -27,8 +28,12 @@ const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results }) 
 
   const displayedResults = showAll ? results : results.slice(0, 4)
 
-  if (results.length === 0) {
+  if (searchPerformed && results.length === 0) {
     return <div className="text-center text-muted-foreground mt-8">No make or model listed matched your query!</div>
+  }
+
+  if (results.length === 0) {
+    return null
   }
 
   return (

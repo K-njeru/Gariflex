@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Menu, X, Search, ArrowRight } from "lucide-react"
+import { Menu, X, Search, Loader2, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
@@ -21,7 +21,8 @@ export default function Navbar() {
   const [searchResults, setSearchResults] = useState<Vehicle[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [searchError, setSearchError] = useState<string | null>(null)
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const [searchPerformed, setSearchPerformed] = useState(false)
+  const debouncedSearchQuery = useDebounce(searchQuery, 1000)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,10 +58,11 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    if (debouncedSearchQuery.length > 2) {
+    if (debouncedSearchQuery.length > 0) {
       handleSearch(debouncedSearchQuery)
     } else {
       setSearchResults([])
+      setSearchPerformed(false)
     }
   }, [debouncedSearchQuery])
 
@@ -74,6 +76,7 @@ export default function Navbar() {
   const handleSearch = async (query: string) => {
     setSearchError(null)
     setIsSearching(true)
+    setSearchPerformed(true)
     try {
       const results = await searchVehicles(query)
       setSearchResults(results)
@@ -90,6 +93,7 @@ export default function Navbar() {
     setSearchQuery("")
     setSearchResults([])
     setSearchError(null)
+    setSearchPerformed(false)
   }
 
   return (
@@ -154,13 +158,9 @@ export default function Navbar() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             {isSearching ? (
-              <motion.div
-                className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-              >
-                <Search className="h-5 w-5 text-teal-500" />
-              </motion.div>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                <Loader2 className="h-5 w-5 text-teal-500 animate-spin" />
+              </div>
             ) : searchQuery ? (
               <button
                 onClick={clearSearch}
@@ -173,7 +173,7 @@ export default function Navbar() {
             )}
           </div>
           {searchError && <p className="text-red-500 text-sm mt-2">{searchError}</p>}
-          {searchResults.length > 0 && <VehicleSearchResults results={searchResults} />}
+          <VehicleSearchResults results={searchResults} searchPerformed={searchPerformed} />
         </div>
       )}
 
