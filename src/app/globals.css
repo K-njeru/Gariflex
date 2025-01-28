@@ -39,7 +39,7 @@ body {
   .dark {
     --background: 220 56% 11%;/* bg-gray-900 - Dark gray background */
     --foreground: 240 5% 90%; /* Light gray text */
-    --card: 240 10% 3.9%;
+    --card: 220, 56%, 8%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
