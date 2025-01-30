@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import Navbar from '@/components/Navbar'
 import { motion } from 'framer-motion'
 import { AboutSection } from '@/components/AboutSection'
-import { CustomerTestimonials } from '@/components/CustomerTestimonials'
+import { TestimonialCarousel } from '@/components/CustomerTestimonials'
 
 export default function Home() {
   const steps = [
@@ -52,7 +52,7 @@ export default function Home() {
       </div>
 
       <AboutSection />
-      <CustomerTestimonials />
+      <TestimonialCarousel />
      
       {/* Steps Section */}
       <section className="bg-gray-900 py-24 px-6 relative overflow-hidden">

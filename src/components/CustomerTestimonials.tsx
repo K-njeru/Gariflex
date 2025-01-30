@@ -1,42 +1,43 @@
 "use client"
 
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 
 const testimonials = [
   {
     name: "Sarah Thompson",
     role: "Business Executive",
-    company: "Tech Innovations Ltd",
-    quote: "Gariflex has transformed our corporate travel. Their service is unparalleled.",
-    image: "/images/sarah-thompson.jpg",
+    quote:
+      "Gariflex has been a game-changer for my business trips. Their luxury sedans are always impeccable, and the service is top-notch.",
   },
   {
-    name: "Michael Ochieng",
-    role: "Travel Enthusiast",
-    company: "Adventure Seekers Club",
-    quote: "From safaris to city tours, Gariflex always has the perfect vehicle for our needs.",
-    image: "https://wallpapercave.com/wp/wp1828679.jpg",
+    name: "Mike Rodriguez",
+    role: "Adventure Enthusiast",
+    quote:
+      "I love how Gariflex offers a wide range of vehicles. Whether I need an SUV for a camping trip or a sports car for a weekend getaway, they've got me covered.",
   },
   {
-    name: "Amina Hassan",
-    role: "Event Planner",
-    company: "Nairobi Gala Events",
-    quote: "Reliable, professional, and always on time. Gariflex is our go-to for all events.",
-    image: "/images/amina-hassan.jpg",
-  },
-  {
-    name: "David Mutua",
-    role: "CEO",
-    company: "EcoTourism Kenya",
-    quote: "Gariflex's commitment to sustainability aligns perfectly with our eco-friendly initiatives.",
-    image: "/images/david-mutua.jpg",
+    name: "Emily Chen",
+    role: "Eco-conscious Traveler",
+    quote:
+      "As someone who prioritizes sustainability, I appreciate Gariflex's selection of electric vehicles. It's great to see a company that cares about the environment.",
   },
 ]
 
-export function CustomerTestimonials() {
+export function TestimonialCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length)
+  }
+
   return (
-    <section className="py-20 bg-muted">
+    <section className="py-20 bg-gray-100">
       <div className="container mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -46,33 +47,36 @@ export function CustomerTestimonials() {
         >
           What Our Customers Say
         </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {testimonials.map((testimonial, index) => (
+        <div className="relative max-w-3xl mx-auto">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-card p-6 rounded-lg shadow-lg flex items-start space-x-4"
+              key={currentIndex}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-lg shadow-lg p-8"
             >
-              <div className="flex-shrink-0">
-                <Image
-                  src={testimonial.image || "/placeholder.svg"}
-                  alt={testimonial.name}
-                  width={60}
-                  height={60}
-                  className="rounded-full"
-                />
-              </div>
+              <Quote className="w-12 h-12 text-teal-500 mb-4" />
+              <p className="text-xl mb-6">{testimonials[currentIndex].quote}</p>
               <div>
-                <p className="text-lg mb-4">&ldquo;{testimonial.quote}&rdquo;</p>
-                <p className="font-semibold">{testimonial.name}</p>
-                <p className="text-sm text-muted-foreground">
-                  {testimonial.role}, {testimonial.company}
-                </p>
+                <p className="font-semibold">{testimonials[currentIndex].name}</p>
+                <p className="text-gray-600">{testimonials[currentIndex].role}</p>
               </div>
             </motion.div>
-          ))}
+          </AnimatePresence>
+          <button
+            onClick={prevSlide}
+            className="absolute top-1/2 -left-12 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg transition duration-300 hover:bg-gray-100"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-600" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute top-1/2 -right-12 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg transition duration-300 hover:bg-gray-100"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-600" />
+          </button>
         </div>
       </div>
     </section>
