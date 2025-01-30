@@ -77,7 +77,7 @@ const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results, se
                   </div>
                 )}
               </div>
-              <div className="p-4">
+              <div className="p-4 flex flex-col h-[calc(100%-12rem)]">
                 <h4 className="text-lg font-semibold mb-2">
                   {vehicle.make} {vehicle.model}
                 </h4>
@@ -90,11 +90,11 @@ const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results, se
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground mb-3">
                   <div className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-1" />
+                    <MapPin className="w-4 h-4 mr-1 text-teal-700" />
                     <span>{vehicle.mileage} miles</span>
                   </div>
                   <div className="flex items-center">
-                    <Users className="w-4 h-4 mr-1" />
+                    <Users className="w-4 h-4 mr-1 text-teal-700" />
                     <span>{vehicle.seat_capacity} seats</span>
                   </div>
                   <div className="flex items-center">
@@ -102,7 +102,7 @@ const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results, se
                     <span>{vehicle.body_type}</span>
                   </div>
                   <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
+                    <Calendar className="w-4 h-4 mr-1 text-teal-700" />
                     <span>{vehicle.booked_from ? "Booked" : "Available"}</span>
                   </div>
                 </div>
@@ -111,10 +111,17 @@ const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results, se
                     Booked: {formatDate(vehicle.booked_from)} - {formatDate(vehicle.booked_to)}
                   </div>
                 )}
-                <Button className="w-full" variant="default">
-                  <Zap className="w-4 h-4 mr-2" />
-                  Book Now
-                </Button>
+                <div className="mt-auto">
+                  <Button
+                    className="w-full"
+                    variant="default"
+                    disabled={!!vehicle.booked_from}
+                    aria-disabled={!!vehicle.booked_from}
+                  >
+                    <Zap className="w-4 h-4 mr-2 text-teal-700" />
+                    {vehicle.booked_from ? "Not Available" : "Book Now"}
+                  </Button>
+                </div>
               </div>
             </motion.div>
           ))}
