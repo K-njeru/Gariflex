@@ -5,7 +5,8 @@ import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import Navbar from '@/components/Navbar'
 import { motion } from 'framer-motion'
-import { OurStory } from '@/components/OurStory'
+import { AboutSection } from '@/components/AboutSection'
+import { CustomerTestimonials } from '@/components/CustomerTestimonials'
 
 export default function Home() {
   const steps = [
@@ -49,7 +50,9 @@ export default function Home() {
           </div>
         </main>
       </div>
-      <OurStory />
+
+      <AboutSection />
+      <CustomerTestimonials />
      
       {/* Steps Section */}
       <section className="bg-gray-900 py-24 px-6 relative overflow-hidden">
