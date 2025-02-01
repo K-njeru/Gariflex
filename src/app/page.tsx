@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import Navbar from '@/components/Navbar'
 import { motion } from 'framer-motion'
 import { AboutSection } from '@/components/AboutSection'
-import { TestimonialCarousel } from '@/components/CustomerTestimonials'
+import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 
 export default function Home() {
   const steps = [
