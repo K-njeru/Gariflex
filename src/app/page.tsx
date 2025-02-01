@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar'
 import { motion } from 'framer-motion'
 import { AboutSection } from '@/components/AboutSection'
 import { TestimonialCarousel } from '@/components/TestimonialCarousel'
+import ClientsSection from '@/components/ClientsSection'
 
 export default function Home() {
   const steps = [
@@ -52,6 +53,7 @@ export default function Home() {
       </div>
 
       <AboutSection />
+      <ClientsSection />
       <TestimonialCarousel />
      
       {/* Steps Section */}

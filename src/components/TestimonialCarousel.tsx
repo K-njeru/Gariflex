@@ -97,9 +97,9 @@ export function TestimonialCarousel() {
                   <Image
                     src={testimonial.image || "/placeholder.svg"}
                     alt={testimonial.name}
-                    width={20}
-                    height={20}
-                    className="rounded-full object-cover overflow-hidden w-20 h-20"
+                    width={40} // Match the w-20 class (20 * 4px = 80px)
+                    height={40} // Match the h-20 class
+                    className="w-10 h-10 rounded-full object-cover overflow-hidden"
                   />
                   <div>
                     <p className="font-semibold">{testimonial.name}</p>
@@ -129,9 +129,9 @@ export function TestimonialCarousel() {
               <Image
                 src={testimonials[currentIndex].image || "/placeholder.svg"}
                 alt={testimonials[currentIndex].name}
-                width={60}
-                height={60}
-                className="rounded-full object-cover overflow-hidden"
+                width={40}
+                height={40}
+                className="w-10 h-10 rounded-full object-cover overflow-hidden"
               />
               <div>
                 <p className="font-semibold">{testimonials[currentIndex].name}</p>
@@ -139,20 +139,20 @@ export function TestimonialCarousel() {
               </div>
             </div>
           </motion.div>
-          <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
+          <div className="absolute -left-4 top-1/2 transform -translate-y-1/2">
             <button
               onClick={() => handleSwipe("right")}
-              className="bg-gray-200 p-2 rounded-full shadow hover:bg-gray-300"
+              className="bg-card p-2 rounded-full shadow hover:bg-muted"
             >
-              <ChevronLeft />
+              <ChevronLeft className="text-teal-500"/>
             </button>
           </div>
-          <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+          <div className="absolute -right-4 top-1/2 transform -translate-y-1/2">
             <button
               onClick={() => handleSwipe("left")}
-              className="bg-gray-200 p-2 rounded-full shadow hover:bg-gray-300"
+              className="bg-card p-2 rounded-full shadow hover:bg-muted"
             >
-              <ChevronRight />
+              <ChevronRight className="text-teal-500" />
             </button>
           </div>
         </div>
