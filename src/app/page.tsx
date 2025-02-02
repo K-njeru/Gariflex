@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar'
 import { AboutSection } from '@/components/AboutSection'
 import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 import ClientsSection from '@/components/ClientsSection'
-import { BackToTop } from '@/components/back-to-top'
+import { Footer } from '@/components/footer'
 
 export default function Home() {
   return (
@@ -47,7 +47,7 @@ export default function Home() {
       <AboutSection />
       <ClientsSection />
       <TestimonialCarousel />
-      <BackToTop />
+      <Footer />
      
     </>
   )
