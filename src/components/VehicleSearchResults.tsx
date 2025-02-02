@@ -57,7 +57,7 @@ const VehicleSearchResults: React.FC<VehicleSearchResultsProps> = ({ results, se
           {displayedResults.map((vehicle) => (
             <motion.div
               key={vehicle.id}
-              className="flex-none w-80 rounded-lg overflow-hidden bg-card shadow-md"
+              className="flex-none w-80 rounded-lg overflow-hidden bg-background shadow-md"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
             >
