@@ -1,5 +1,4 @@
 import Link from "next/link"
-import Image from "next/image"
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail } from "lucide-react"
 import { BackToTop } from "./back-to-top"
 
@@ -62,7 +61,7 @@ export function Footer() {
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-teal-400" />
                 <a href="tel:+12345678900" className="text-sm hover:text-teal-400">
-                  +1 234 567 8900
+                  +254 794298696
                 </a>
               </div>
               <div className="flex items-center space-x-3">
@@ -80,9 +79,7 @@ export function Footer() {
             <div className="mb-4 h-1 w-full bg-gray-600">
               <div className="h-full w-[10%] bg-teal-500" />
             </div>
-            <Link href="#hero" className="mb-6 block">
-              <Image src="/placeholder.svg" alt="Gariflex Logo" width={150} height={50} className="h-12 w-auto" />
-            </Link>
+    
             <div className="flex space-x-4">
               <a
                 href="https://twitter.com/gariflex"

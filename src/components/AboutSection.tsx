@@ -1,11 +1,39 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, JSX } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Car, Shield, Clock, Users, MapPin, Zap } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card" 
+import { Car, Shield, Clock, Users, MapPin, Zap, TimerReset, KeySquare } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
-const sections = [
+type Section = {
+  id: string
+  title: string
+  subtitle: string
+  content: {
+    description: string
+    timeline?: Array<{
+      year: string
+      title: string
+      description: string
+      icon: JSX.Element
+    }>
+    stats?: Array<{
+      value: string
+      label: string
+    }>
+    features?: Array<{
+      icon: JSX.Element
+      feature: string
+    }>
+    benefits?: Array<{
+      icon: JSX.Element
+      title: string
+      description: string
+    }>
+  }
+}
+
+const sections: Section[] = [
   {
     id: "legacy",
     title: "Legacy",
@@ -45,7 +73,11 @@ const sections = [
         { value: "100+", label: "Premium Vehicles" },
         { value: "24/7", label: "Support" },
       ],
-      features: ["Instant booking confirmation", "Quick vehicle deployment", "Streamlined pickup process"],
+      features: [
+        { icon: <TimerReset className="text-teal-500" />, feature: "Instant booking confirmation" },
+        { icon: <Zap className="text-teal-500" />, feature: "Quick vehicle deployment" },
+        { icon: <KeySquare className="text-teal-500" />, feature: "Streamlined pickup process" },
+      ],
     },
   },
   {
@@ -89,10 +121,16 @@ export function AboutSection() {
     return () => clearInterval(interval)
   }, [autoplay])
 
+  const currentSection = sections[activeSection]
+
+  if (!currentSection) {
+    return null // or some fallback UI
+  }
+
   return (
     <section className="py-24 bg-background overflow-hidden">
-      <div className="container px-4 mx-auto">
-        <div className="flex items-center space-x-8 mb-16">
+      <div className="container px-4 mx-auto w-full lg:w-4/5">
+        <div className="flex items-start space-x-8 mb-16">
           {sections.map((section, index) => (
             <motion.div
               key={section.id}
@@ -113,7 +151,7 @@ export function AboutSection() {
                   )}
                 </div>
                 <h2 className="text-4xl font-bold tracking-tight">{section.title}</h2>
-                <p className="text-sm text-muted-foreground mt-2">{section.subtitle}</p>
+                <p className="text-sm text-muted-foreground mt-2 h-12">{section.subtitle}</p>
               </div>
             </motion.div>
           ))}
@@ -121,20 +159,20 @@ export function AboutSection() {
 
         <AnimatePresence mode="wait">
           <motion.div
-            key={sections[activeSection].id}
+            key={currentSection.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="relative"
+            className="relative overflow-y-auto h-[calc(100%-8rem)]"
           >
             <div className="max-w-2xl mb-12">
-              <p className="text-xl text-muted-foreground">{sections[activeSection].content.description}</p>
+              <p className="text-xl text-muted-foreground">{currentSection.content.description}</p>
             </div>
 
-            {activeSection === 0 && (
+            {activeSection === 0 && currentSection.content.timeline && (
               <div className="grid md:grid-cols-3 gap-8">
-                {sections[0].content.timeline.map((item, index) => (
+                {currentSection.content.timeline.map((item, index) => (
                   <Card key={index} className="relative overflow-hidden group hover:shadow-lg transition-shadow">
                     <CardContent className="p-6">
                       <div className="mb-4">{item.icon}</div>
@@ -149,10 +187,10 @@ export function AboutSection() {
               </div>
             )}
 
-            {activeSection === 1 && (
+            {activeSection === 1 && currentSection.content.stats && currentSection.content.features && (
               <div className="space-y-12">
                 <div className="grid grid-cols-3 gap-8">
-                  {sections[1].content.stats.map((stat, index) => (
+                  {currentSection.content.stats.map((stat, index) => (
                     <div key={index} className="text-center">
                       <div className="text-4xl font-bold text-teal-500 mb-2">{stat.value}</div>
                       <div className="text-sm text-muted-foreground">{stat.label}</div>
@@ -160,19 +198,19 @@ export function AboutSection() {
                   ))}
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
-                  {sections[1].content.features.map((feature, index) => (
-                    <div key={index} className="flex items-center space-x-3">
-                      <div className="h-1 w-1 rounded-full bg-teal-500" />
-                      <p className="text-muted-foreground">{feature}</p>
+                  {currentSection.content.features.map((feature, index) => (
+                    <div key={index} className="flex items-center space-x-3 lg:justify-center">
+                      <div className="h-4 w-4 flex items-center justify-center">{feature.icon}</div>
+                      <p className="text-muted-foreground">{feature.feature}</p>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {activeSection === 2 && (
+            {activeSection === 2 && currentSection.content.benefits && (
               <div className="grid md:grid-cols-3 gap-8">
-                {sections[2].content.benefits.map((benefit, index) => (
+                {currentSection.content.benefits.map((benefit, index) => (
                   <Card key={index} className="group hover:shadow-lg transition-shadow">
                     <CardContent className="p-6 text-center">
                       <div className="mb-4 flex justify-center">{benefit.icon}</div>
