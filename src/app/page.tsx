@@ -1,4 +1,3 @@
-'use client'
 
 import Image from 'next/image'
 import { Search } from 'lucide-react'
@@ -8,8 +7,12 @@ import { AboutSection } from '@/components/AboutSection'
 import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 import ClientsSection from '@/components/ClientsSection'
 import { Footer } from '@/components/footer'
+import {VehicleHireForm} from '@/components/VehicleHireForm'
+import { getVehicles } from "./actions/vehicle-hire"
 
-export default function Home() {
+
+export default async function Page() {
+  const vehicles = await getVehicles()
   return (
     <>
       <Navbar />
@@ -44,6 +47,7 @@ export default function Home() {
         </main>
       </div>
 
+      <VehicleHireForm vehicles={vehicles} />
       <AboutSection />
       <ClientsSection />
       <TestimonialCarousel />
